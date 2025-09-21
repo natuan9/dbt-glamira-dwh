@@ -1,0 +1,23 @@
+SELECT
+    _id,
+    time_stamp,
+    local_time,
+    collection,
+    product_id,
+    ip,
+    user_id_db,
+    order_id,
+    price,
+    currency,
+    is_paypal,
+    current_url,
+    referrer_url,
+    key_search,
+    recommendation_clicked_position,
+    recommendation_product_id,
+    recommendation_product_position,
+    cart_products,
+    option,
+    show_recommendation,
+    recommendation
+FROM {{ ref('stg_user_behaviors') }}

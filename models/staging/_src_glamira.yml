@@ -1,0 +1,8 @@
+sources:
+  - name: glamira_data
+    database: my-glamira-project
+    schema: glamira_dataset
+    tables:
+      - name: raw_ip_locations
+      - name: raw_products
+      - name: raw_user_behaviors

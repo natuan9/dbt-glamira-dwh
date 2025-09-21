@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: "Dimension table for products"
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_locations
+    description: "Dimension table for locations"
+    columns:
+      - name: ip
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_user_behaviors
+    description: "Fact table for user behaviors"
+    columns:
+      - name: _id
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+      - name: ip
+        tests:
+          - relationships:
+              to: ref('dim_locations')
+              field: ip
