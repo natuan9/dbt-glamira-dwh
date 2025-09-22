@@ -2,6 +2,7 @@ SELECT
     _id,
     time_stamp,
     local_time,
+    device_id
     collection,
     product_id,
     ip,
@@ -16,8 +17,6 @@ SELECT
     recommendation_clicked_position,
     recommendation_product_id,
     recommendation_product_position,
-    cart_products,
-    option,
     show_recommendation,
     recommendation
 FROM {{ ref('stg_user_behaviors') }}

@@ -1,14 +1,14 @@
 WITH source AS (
     SELECT DISTINCT
-        user_id_db,
         device_id,
-        email_address
+        user_agent,
+        resolution
     FROM {{ ref('stg_user_behaviors') }}
-    WHERE user_id_db IS NOT NULL
+    WHERE device_id IS NOT NULL
 )
 
 SELECT
-    user_id_db,
     device_id,
-    email_address
+    user_agent,
+    resolution
 FROM source
