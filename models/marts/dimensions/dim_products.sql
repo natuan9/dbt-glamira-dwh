@@ -1,6 +1,6 @@
 select 
     product_id,
-    name,
+    product_name,
     category_name,
     collection,
     type_id,

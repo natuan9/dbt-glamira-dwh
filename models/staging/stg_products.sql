@@ -2,7 +2,7 @@ with products as (
 
     select 
         product_id,
-        name,
+        name as product_name,
         category_name,
         collection,
         type_id,

@@ -3,6 +3,7 @@ with user_behaviors as (
     select 
         _id,
         time_stamp,
+        FORMAT_DATE('%Y%m%d', DATE(time_stamp)) AS date_id,
         local_time,
         collection,
         product_id,
