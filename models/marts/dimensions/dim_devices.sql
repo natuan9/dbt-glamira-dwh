@@ -2,7 +2,7 @@ WITH source AS (
     SELECT DISTINCT
         device_id,
         user_agent,
-        resolution
+        device_resolution
     FROM {{ ref('stg_user_behaviors') }}
     WHERE device_id IS NOT NULL
 )
@@ -10,5 +10,5 @@ WITH source AS (
 SELECT
     device_id,
     user_agent,
-    resolution
+    device_resolution
 FROM source

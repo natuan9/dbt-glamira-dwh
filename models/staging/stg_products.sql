@@ -2,16 +2,16 @@ with products as (
 
     select 
         product_id,
-        name as product_name,
+        name AS product_name,
         category_name,
-        collection,
+        collection AS product_collection,
         type_id,
         gender,
         material_design,
-        price,
+        price AS product_price,
         min_price,
         max_price,
-        url
+        url AS product_url
     from `my-glamira-project.glamira_dataset.raw_products`
 
 )

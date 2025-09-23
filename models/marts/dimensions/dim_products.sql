@@ -2,13 +2,12 @@ select
     product_id,
     product_name,
     category_name,
-    collection,
+    product_collection,
     type_id,
     gender,
     material_design,
-    price,
+    product_price,
     min_price,
     max_price,
-    qty,
-    url
+    product_url
 from {{ ref('stg_products') }}

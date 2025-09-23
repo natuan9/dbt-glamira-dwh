@@ -8,10 +8,10 @@ with user_behaviors as (
         collection,
         product_id,
         ip,
-        user_id_db,
+        user_id_db AS user_id,
         order_id,
         price,
-        currency,
+        currency AS sale_currency,
         is_paypal,
         current_url,
         referrer_url,
@@ -26,7 +26,7 @@ with user_behaviors as (
         device_id,
         email_address,
         user_agent,
-        resolution,
+        resolution AS device_resolution,
         store_id
     from `my-glamira-project.glamira_dataset.raw_user_behaviors`
  

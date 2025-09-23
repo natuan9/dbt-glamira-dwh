@@ -1,6 +1,6 @@
 WITH base AS (
     SELECT 
-        user_id_db,
+        user_id,
         order_id,
         date_id,
         collection,
@@ -13,7 +13,7 @@ WITH base AS (
 
 flattened AS (
     SELECT
-        b.user_id_db,
+        b.user_id,
         b.order_id,
         b.date_id,
         cp.product_id,
@@ -27,7 +27,7 @@ flattened AS (
 )
 
 SELECT
-    user_id_db,
+    user_id,
     order_id,
     date_id,
     product_id,
