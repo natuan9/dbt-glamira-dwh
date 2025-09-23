@@ -11,7 +11,6 @@ with products as (
         price,
         min_price,
         max_price,
-        qty,
         url
     from `my-glamira-project.glamira_dataset.raw_products`
 

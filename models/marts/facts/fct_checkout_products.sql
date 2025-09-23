@@ -5,6 +5,7 @@ WITH base AS (
         date_id,
         collection,
         device_id,
+        store_id,
         cart_products
     FROM {{ ref('stg_user_behaviors') }}
     WHERE collection = 'checkout_success'
@@ -19,6 +20,7 @@ flattened AS (
         cp.amount,
         SAFE_CAST(cp.price AS NUMERIC) AS price,
         device_id,
+        store_id,
         cp.currency
     FROM base b
     CROSS JOIN UNNEST(b.cart_products) AS cp
@@ -32,5 +34,6 @@ SELECT
     amount,
     price,
     device_id,
+    store_id,
     currency
 FROM flattened

@@ -18,5 +18,6 @@ SELECT
     recommendation_product_id,
     recommendation_product_position,
     show_recommendation,
+    store_id,
     recommendation
 FROM {{ ref('stg_user_behaviors') }}

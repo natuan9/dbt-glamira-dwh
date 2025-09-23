@@ -25,6 +25,8 @@ with user_behaviors as (
         recommendation,
         device_id,
         email_address,
+        user_agent,
+        resolution,
         store_id
     from `my-glamira-project.glamira_dataset.raw_user_behaviors`
  

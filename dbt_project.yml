@@ -44,3 +44,8 @@ models:
     marts:
       +schema: marts
       +materialized: table
+
+seeds:
+  glamira_dwh:
+    dim_stores:
+      +schema: marts
