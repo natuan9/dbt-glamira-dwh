@@ -1,6 +1,6 @@
-with user_behaviors as (
+WITH user_behaviors AS (
 
-    select 
+    SELECT 
         _id,
         time_stamp,
         FORMAT_DATE('%Y%m%d', DATE(TIMESTAMP_SECONDS(time_stamp))) AS date_id,
@@ -28,8 +28,8 @@ with user_behaviors as (
         user_agent,
         resolution AS device_resolution,
         store_id
-    from `my-glamira-project.glamira_dataset.raw_user_behaviors`
+    FROM `my-glamira-project.glamira_dataset.raw_user_behaviors`
  
 )
 
-select * from user_behaviors
+SELECT * FROM user_behaviors

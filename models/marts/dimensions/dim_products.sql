@@ -1,4 +1,4 @@
-select 
+SELECT 
     product_id,
     product_name,
     category_name,
@@ -10,4 +10,4 @@ select
     min_price,
     max_price,
     product_url
-from {{ ref('stg_products') }}
+FROM {{ ref('stg_products') }}

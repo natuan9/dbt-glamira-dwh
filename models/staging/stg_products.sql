@@ -1,6 +1,6 @@
-with products as (
+WITH products AS (
 
-    select 
+    SELECT 
         product_id,
         name AS product_name,
         category_name,
@@ -12,8 +12,8 @@ with products as (
         min_price,
         max_price,
         url AS product_url
-    from `my-glamira-project.glamira_dataset.raw_products`
+    FROM `my-glamira-project.glamira_dataset.raw_products`
 
 )
 
-select * from products
+SELECT * FROM products

@@ -1,13 +1,13 @@
-with ip_locations as (
+WITH ip_locations AS (
 
-    select 
+    SELECT 
         ip,
         country_code,
         country_name,
         region_name,
         city_name
-    from `my-glamira-project.glamira_dataset.raw_ip_locations`
+    FROM `my-glamira-project.glamira_dataset.raw_ip_locations`
  
 )
 
-select * from ip_locations
+SELECT * FROM ip_locations
