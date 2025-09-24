@@ -10,4 +10,4 @@ SELECT
     ,min_price
     ,max_price
     ,product_url
-FROM {{ ref('stg_products') }}
+FROM {{ ref('stg_product') }}

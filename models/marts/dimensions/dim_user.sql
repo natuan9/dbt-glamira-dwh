@@ -3,7 +3,7 @@ WITH source AS (
         user_id
         ,device_id
         ,email_address
-    FROM {{ ref('stg_user_behaviors') }}
+    FROM {{ ref('stg_user_behavior') }}
     WHERE user_id IS NOT NULL
 )
 

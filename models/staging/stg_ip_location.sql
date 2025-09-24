@@ -1,12 +1,13 @@
 WITH ip_locations AS (
 
     SELECT 
-        ip
+        FARM_FINGERPRINT(CONCAT(ip, country_name, region_name, city_name)) AS location_key
+        ,ip AS ip_address
         ,country_code
         ,country_name
         ,region_name
         ,city_name
-    FROM `my-glamira-project.glamira_dataset.raw_ip_locations`
+    FROM {{ source('glamira_data', 'raw_ip_locations') }}
  
 )
 

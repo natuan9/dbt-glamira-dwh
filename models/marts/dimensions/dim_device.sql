@@ -3,7 +3,7 @@ WITH source AS (
         device_id
         ,user_agent
         ,device_resolution
-    FROM {{ ref('stg_user_behaviors') }}
+    FROM {{ ref('stg_user_behavior') }}
     WHERE device_id IS NOT NULL
 )
 

@@ -7,7 +7,7 @@ WITH user_behaviors AS (
         ,local_time
         ,collection
         ,product_id
-        ,ip
+        ,ip as ip_address
         ,user_id_db AS user_id
         ,order_id
         ,price
@@ -28,7 +28,7 @@ WITH user_behaviors AS (
         ,user_agent
         ,resolution AS device_resolution
         ,store_id
-    FROM `my-glamira-project.glamira_dataset.raw_user_behaviors`
+    FROM {{ source('glamira_data', 'raw_user_behaviors') }}
  
 )
 

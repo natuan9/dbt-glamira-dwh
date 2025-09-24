@@ -12,7 +12,7 @@ WITH products AS (
         ,min_price
         ,max_price
         ,url AS product_url
-    FROM `my-glamira-project.glamira_dataset.raw_products`
+    FROM {{ source('glamira_data', 'raw_products') }}
 
 )
 
