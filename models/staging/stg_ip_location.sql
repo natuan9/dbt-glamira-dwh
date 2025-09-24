@@ -1,8 +1,7 @@
 WITH ip_locations AS (
 
     SELECT 
-        FARM_FINGERPRINT(CONCAT(ip, country_name, region_name, city_name)) AS location_key
-        ,ip AS ip_address
+        ip AS ip_address
         ,country_code
         ,country_name
         ,region_name

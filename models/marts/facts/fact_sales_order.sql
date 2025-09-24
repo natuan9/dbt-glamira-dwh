@@ -41,7 +41,7 @@ with_location AS (
         l.location_key,
         f.currency
     FROM flattened f
-    LEFT JOIN {{ ref('stg_ip_location') }} l
+    LEFT JOIN {{ ref('dim_location') }} l
         ON f.ip_address = l.ip_address
 )
 

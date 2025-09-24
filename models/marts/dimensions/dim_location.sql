@@ -1,5 +1,5 @@
 SELECT DISTINCT
-    location_key
+    FARM_FINGERPRINT(CONCAT(ip_address, country_name, region_name, city_name)) AS location_key
     ,ip_address
     ,country_code
     ,country_name
