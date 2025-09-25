@@ -38,11 +38,28 @@ with_location AS (
         f.sale_price,
         f.device_id,
         f.store_id,
-        l.location_key,
+        COALESCE(l.location_key, -1) AS location_key,
         f.currency
     FROM flattened f
     LEFT JOIN {{ ref('dim_location') }} l
         ON f.ip_address = l.ip_address
+),
+
+with_product AS (
+    SELECT
+        wl.user_id,
+        wl.order_id,
+        wl.date_id,
+        COALESCE(p.product_id, -1) AS product_id,
+        wl.sale_quantity,
+        wl.sale_price,
+        wl.device_id,
+        wl.store_id,
+        wl.location_key,
+        wl.currency
+    FROM with_location wl
+    LEFT JOIN {{ ref('dim_product') }} p
+        ON wl.product_id = p.product_id
 )
 
 
@@ -57,4 +74,4 @@ SELECT
     ,device_id
     ,store_id
     ,currency
-FROM with_location
+FROM with_product
