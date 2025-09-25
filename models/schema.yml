@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: dim_products
+  - name: dim_product
     description: "Dimension table for products"
     columns:
       - name: product_id
@@ -9,28 +9,42 @@ models:
           - unique
           - not_null
 
-  - name: dim_locations
+  - name: dim_location
     description: "Dimension table for locations"
     columns:
-      - name: ip
+      - name: ip_address
+        tests:
+          - unique
+          - not_null
+      - name: location_key
         tests:
           - unique
           - not_null
 
-  - name: fact_user_behaviors
-    description: "Fact table for user behaviors"
+  - name: fact_sales_order
+    description: "Fact table for sale order"
     columns:
-      - name: _id
-        tests:
-          - unique
-          - not_null
       - name: product_id
         tests:
           - relationships:
-              to: ref('dim_products')
+              to: ref('dim_product')
               field: product_id
-      - name: ip
+      - name: location_key
         tests:
           - relationships:
-              to: ref('dim_locations')
-              field: ip
+              to: ref('dim_location')
+              field: location_key
+
+  - name: stg_ip_location
+    columns:
+      - name: ip_address
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_product
+    columns:
+      - name: product_id
+        data_tests:
+          - unique
+          - not_null
