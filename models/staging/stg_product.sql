@@ -8,9 +8,9 @@ WITH products AS (
         ,type_id
         ,gender
         ,material_design
-        ,price AS product_price
-        ,min_price
-        ,max_price
+        ,SAFE_CAST(price AS NUMERIC) AS product_price
+        ,SAFE_CAST(min_price AS NUMERIC) AS min_price
+        ,SAFE_CAST(max_price AS NUMERIC) AS max_price
         ,url AS product_url
     FROM {{ source('glamira_data', 'raw_products') }}
 

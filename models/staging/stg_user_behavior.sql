@@ -10,7 +10,7 @@ WITH user_behaviors AS (
         ,ip as ip_address
         ,user_id_db AS user_id
         ,order_id
-        ,price
+        ,SAFE_CAST(price AS NUMERIC) AS price
         ,currency AS sale_currency
         ,is_paypal
         ,current_url

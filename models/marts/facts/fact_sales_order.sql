@@ -18,8 +18,8 @@ flattened AS (
         ,b.order_id
         ,b.date_id
         ,cp.product_id
-        ,cp.amount AS sale_quantity
-        ,SAFE_CAST(cp.price AS NUMERIC) AS sale_price
+        ,cp.amount AS order_quantity
+        ,SAFE_CAST(cp.price AS NUMERIC) AS unit_price
         ,device_id
         ,store_id
         ,ip_address
@@ -34,8 +34,8 @@ with_location AS (
         f.order_id,
         f.date_id,
         f.product_id,
-        f.sale_quantity,
-        f.sale_price,
+        f.order_quantity,
+        f.unit_price,
         f.device_id,
         f.store_id,
         COALESCE(l.location_key, -1) AS location_key,
@@ -51,8 +51,8 @@ with_product AS (
         wl.order_id,
         wl.date_id,
         COALESCE(p.product_id, -1) AS product_id,
-        wl.sale_quantity,
-        wl.sale_price,
+        wl.order_quantity,
+        wl.unit_price,
         wl.device_id,
         wl.store_id,
         wl.location_key,
@@ -69,8 +69,9 @@ SELECT
     ,date_id
     ,location_key
     ,product_id
-    ,sale_quantity
-    ,sale_price
+    ,order_quantity
+    ,unit_price
+    ,order_quantity * unit_price AS sale_amount
     ,device_id
     ,store_id
     ,currency
