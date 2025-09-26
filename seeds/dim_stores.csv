@@ -1,0 +1,87 @@
+store_id,store_name,url
+1,Store Germany,https://www.ring-paare.de
+10,Store Switzerland,https://www.glamira.ch
+100,Store Kuwait,https://www.glamira.com.kw
+101,Store Thailand,https://www.glamira.co.th
+11,Store Netherlands,https://www.glamira.nl
+12,Store France,https://www.glamira.fr
+13,Store Denmark,https://www.glamira.dk
+14,Store Italy,https://www.glamira.it
+16,Store Finland,https://www.glamira.fi
+17,Store Turkey,https://www.glamira.com.tr
+19,Store Sweden,https://www.glamira.se
+24,Store Local,http://glamira.local
+25,Store China,https://www.glamira.cn
+26,Store Brazil,https://www.glamira.com.br
+27,Store Japan,https://www.glamira.jp
+29,Store Australia,https://www.glamira.com.au
+30,Store Norway,https://www.glamira.no
+32,Store Belgium,https://www.glamira.be
+33,Store Belgium French,https://www.glamira.be
+34,Store Portugal,https://www.glamira.pt
+35,Store Switzerland French,https://www.glamira.ch
+36,Store Malta,https://www.glamira.com.mt
+37,Store Singapore,https://www.glamira.sg
+38,Store Canada,https://www.glamira.ca
+39,Store Canada French,https://www.glamira.ca
+40,Store Ireland,https://www.glamira.ie
+41,Store USA,https://www.glamira.com
+45,Store Czech Republic,https://www.glamira.cz
+46,Store Hungary,https://www.glamira.hu
+47,Store Hong Kong,https://www.glamira.hk
+48,Store Hong Kong Chinese,https://www.glamira.hk
+49,Store South Korea,https://www.glamira.kr
+50,Store Poland,https://www.glamira.pl
+51,Store Romania,https://www.glamira.ro
+52,Store Serbia,https://www.glamira.rs
+53,Store Slovakia,https://www.glamira.sk
+54,Store Vietnam,https://www.glamira.vn
+55,Store Slovenia,https://www.glamira.si
+56,Store Croatia,https://www.glamira.hr
+57,Store Lithuania,https://www.glamira.lt
+58,Store Estonia,https://www.glamira.ee
+59,Store Latvia,https://www.glamira.lv
+6,Store Germany Glamira,https://www.glamira.de
+60,Store New Zealand,https://www.glamira.co.nz
+61,Store Switzerland Italian,https://www.glamira.ch
+62,Store Mexico,https://www.glamira.com.mx
+63,Store UAE,https://www.glamira.ae
+64,Store India,https://www.glamira.in
+65,Store Argentina,https://www.glamira.com.ar
+66,Store Bulgaria,https://www.glamira.bg
+67,Store Ukraine,https://www.glamira.com.ua
+68,Store USA Spanish,https://www.glamira.com
+69,Store Bolivia,https://www.glamira.com.bo
+7,Store UK,https://www.glamira.co.uk
+70,Store Colombia,https://www.glamira.com.co
+71,Store Costa Rica,https://www.glamira.co.cr
+72,Store Dominican Republic,https://www.glamira.com.do
+73,Store Ecuador,https://www.glamira.com.ec
+74,Store Guatemala,https://www.glamira.com.gt
+75,Store Honduras,https://www.glamira.hn
+76,Store Peru,https://www.glamira.com.pe
+77,Store Singapore Chinese,https://www.glamira.sg
+78,Store Local Russian,http://glamira.local
+79,Store South Africa,https://www.glamira.co.za
+8,Store Spain,https://www.glamira.es
+80,Store Africa,https://www.glamira.africa
+81,Store Africa French,https://www.glamira.africa
+82,Store Iceland,https://www.glamira.is
+83,Store Africa Portuguese,https://www.glamira.africa
+84,Store Albania,https://www.glamira.al
+85,Store Chile,https://www.glamira.cl
+86,Store Philippines,https://www.glamira.com.ph
+87,Store Generic,https://www.glamira.store
+88,Store Moldova,https://www.glamira.md
+89,Store Uruguay,https://www.glamira.com.uy
+9,Store Austria,https://www.glamira.at
+90,Store El Salvador,https://www.glamira.com.sv
+91,Store Paraguay,https://www.glamira.com.py
+92,Store Panama,https://www.glamira.com.pa
+93,Store Puerto Rico,https://www.glamira.com.pr
+94,Store Indonesia,https://www.glamira.co.id
+95,Store Azerbaijan,https://www.glamira.az
+96,Store Taiwan,https://www.glamira.com.tw
+97,Store Taiwan Chinese,https://www.glamira.com.tw
+98,Store Azerbaijan English,https://www.glamira.az
+99,Store Malaysia,https://www.glamira.com.my

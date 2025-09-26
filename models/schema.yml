@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: dim_product
+    description: "Dimension table for products"
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_location
+    description: "Dimension table for locations"
+    columns:
+      - name: location_key
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_sales_order
+    description: "Fact table for sale order"
+    columns:
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_id
+      - name: location_key
+        tests:
+          - relationships:
+              to: ref('dim_location')
+              field: location_key
+      - name: user_id
+        tests:
+          - relationships:
+              to: ref('dim_user')
+              field: user_id
+      - name: device_id
+        tests:
+          - relationships:
+              to: ref('dim_device')
+              field: device_id
+      - name: date_id
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('dim_store')
+              field: store_id
+
+  - name: stg_ip_location
+    columns:
+      - name: ip_address
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_product
+    columns:
+      - name: product_id
+        data_tests:
+          - unique
+          - not_null
