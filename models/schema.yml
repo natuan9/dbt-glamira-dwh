@@ -12,10 +12,6 @@ models:
   - name: dim_location
     description: "Dimension table for locations"
     columns:
-      - name: ip_address
-        tests:
-          - unique
-          - not_null
       - name: location_key
         tests:
           - unique
@@ -34,6 +30,26 @@ models:
           - relationships:
               to: ref('dim_location')
               field: location_key
+      - name: user_id
+        tests:
+          - relationships:
+              to: ref('dim_user')
+              field: user_id
+      - name: device_id
+        tests:
+          - relationships:
+              to: ref('dim_device')
+              field: device_id
+      - name: date_id
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('dim_store')
+              field: store_id
 
   - name: stg_ip_location
     columns:

@@ -2,7 +2,7 @@
 -- Therefore return records where this isn't true to make the test fail.
 select
   order_id,
-  sum(sale_price) as total_amount
+  sum(sale_amount) as total_amount
 from {{ ref('fact_sales_order') }}
 group by 1
 having (total_amount < 0)
