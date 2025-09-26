@@ -1,6 +1,5 @@
 SELECT DISTINCT
-    FARM_FINGERPRINT(CONCAT(ip_address, country_name, region_name, city_name)) AS location_key
-    ,ip_address
+    location_key
     ,country_code
     ,country_name
     ,region_name
@@ -11,7 +10,6 @@ UNION ALL
 
 SELECT
     -1 AS location_key,
-    "Unknown" AS ip_address,
     "Unknown" AS country_code,
     "Unknown" AS country_name,
     "Unknown" AS region_name,

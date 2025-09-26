@@ -49,3 +49,5 @@ seeds:
   glamira_dwh:
     dim_stores:
       +schema: marts
+    dim_exchange_rate:
+      +schema: marts

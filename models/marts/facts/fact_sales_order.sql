@@ -41,7 +41,7 @@ with_location AS (
         COALESCE(l.location_key, -1) AS location_key,
         f.currency
     FROM flattened f
-    LEFT JOIN {{ ref('dim_location') }} l
+    LEFT JOIN {{ ref('stg_ip_location') }} l
         ON f.ip_address = l.ip_address
 ),
 
@@ -60,8 +60,18 @@ with_product AS (
     FROM with_location wl
     LEFT JOIN {{ ref('dim_product') }} p
         ON wl.product_id = p.product_id
-)
+),
 
+with_exchange_rate AS (
+
+    SELECT
+        wp.*,
+        COALESCE(er.exchange_rate, 1.0) AS exchange_rate
+    FROM with_product wp
+    LEFT JOIN {{ ref('dim_exchange_rate') }} er
+        ON wp.currency = er.code
+
+)
 
 SELECT
     user_id
@@ -70,9 +80,9 @@ SELECT
     ,location_key
     ,product_id
     ,order_quantity
-    ,unit_price
-    ,order_quantity * unit_price AS sale_amount
+    ,unit_price * exchange_rate AS unit_price
+    ,order_quantity * unit_price * exchange_rate AS sale_amount
     ,device_id
     ,store_id
-    ,currency
-FROM with_product
+    ,'USD' AS currency
+FROM with_exchange_rate
