@@ -1,66 +1,363 @@
 version: 2
 
 models:
-  - name: dim_product
-    description: "Dimension table for products"
+  - name: dim_date
+    description: "Date dimension table. Contains a continuous range of calendar dates from 2015-01-01 to 2030-12-31, used for time-based analysis."
     columns:
-      - name: product_id
+      - name: date_id
+        description: "Surrogate key for the date dimension, formatted as YYYYMMDD (string)."
         tests:
           - unique
           - not_null
+
+      - name: date
+        description: "The full calendar date (DATE type)."
+
+      - name: year
+        description: "The year extracted from the date (e.g., 2025)."
+
+      - name: quarter
+        description: "The calendar quarter of the year (1 to 4)."
+
+      - name: month
+        description: "The month number (1 to 12)."
+
+      - name: month_name
+        description: "The full month name (e.g., January, February)."
+
+      - name: week_of_year
+        description: "The ISO week number within the year (1 to 53)."
+
+      - name: day_of_month
+        description: "The day number within the month (1 to 31)."
+
+      - name: day_of_week
+        description: "The day number of the week (1=Sunday, 7=Saturday)."
+
+      - name: day_name
+        description: "The full day name of the week (e.g., Monday, Tuesday)."
+
+      - name: is_weekend
+        description: "Boolean flag indicating if the date falls on a weekend (Saturday or Sunday)."
+
+  - name: dim_device
+    description: "Device dimension table. Stores unique devices identified in user behaviors, including user agent and resolution information."
+    columns:
+      - name: device_id
+        description: "Unique identifier for a device. Derived from user behavior logs."
+        tests:
+          - unique
+          - not_null
+
+      - name: user_agent
+        description: "Full user agent string captured from the device (e.g., browser, OS, version)."
+
+      - name: device_resolution
+        description: "Screen resolution of the device (e.g., 1920x1080)."
+
+  - name: dim_product
+    description: >
+      Product dimension table that standardizes product attributes for reporting and analysis.  
+      Includes product details such as name, category, collection, type, gender, material, and price information.  
+      Contains a default "Unknown Product" record with `product_id = -1` to handle missing or unmapped values.
+    columns:
+      - name: product_id
+        description: >
+          Surrogate key for product.  
+          `-1` represents unknown or missing product values.
+        tests:
+          - not_null
+          - unique
+
+      - name: product_name
+        description: >
+          Name of the product.  
+          Defaults to "Unknown Product" when product information is missing.
+
+      - name: category_name
+        description: >
+          Category of the product (e.g., Rings, Necklaces).  
+          Defaults to "Unknown Category" when category is unavailable.
+
+      - name: product_collection
+        description: >
+          Product collection or grouping (e.g., Wedding, Casual).  
+          Defaults to "Unknown Collection" when collection is missing.
+
+      - name: type_id
+        description: >
+          Type identifier of the product.  
+          Defaults to "Unknown Type" when not provided.
+
+      - name: gender
+        description: >
+          Target gender for the product (e.g., Male, Female, Unisex).  
+          Defaults to "Unknown" when not provided.
+
+      - name: material_design
+        description: >
+          Material or design specification of the product (e.g., Gold, Silver).  
+          Defaults to "Unknown" when missing.
+
+      - name: product_price
+        description: >
+          Base price of the product in original currency.  
+          Can be NULL for unknown products.
+
+      - name: min_price
+        description: >
+          Minimum price of the product (useful for products with price ranges).  
+          Can be NULL for unknown products.
+
+      - name: max_price
+        description: >
+          Maximum price of the product (useful for products with price ranges).  
+          Can be NULL for unknown products.
+
+      - name: product_url
+        description: >
+          URL link to the product page.  
+          Defaults to "Unknown" when not provided.
 
   - name: dim_location
-    description: "Dimension table for locations"
+    description: >
+      Location dimension table that standardizes geographic information.  
+      Provides country, region, and city details for user IP addresses,  
+      along with a surrogate `location_key`. Includes a default "Unknown" record for unresolved locations.
     columns:
       - name: location_key
+        description: >
+          Surrogate key for location.  
+          `-1` represents unknown or missing location values.
         tests:
+          - not_null
           - unique
+
+      - name: country_code
+        description: >
+          ISO country code (e.g., `US`, `VN`).  
+          "Unknown" when location cannot be resolved.
+        tests:
           - not_null
 
+      - name: country_name
+        description: >
+          Full name of the country (e.g., `United States`, `Vietnam`).  
+          "Unknown" when location cannot be resolved.
+        tests:
+          - not_null
+
+      - name: region_name
+        description: >
+          Region, state, or province name associated with the IP address.  
+          "Unknown" when location cannot be resolved.
+
+      - name: city_name
+        description: >
+          City name associated with the IP address.  
+          "Unknown" when location cannot be resolved.
+
+  - name: dim_user
+    description: >
+      User dimension table that stores unique user information extracted from user behavior data.
+    columns:
+      - name: user_id
+        description: >
+          Surrogate key for the user.  
+          Ensures uniqueness across all users.
+        tests:
+          - not_null
+          - unique
+
+      - name: device_id
+        description: >
+          Identifier for the device associated with the user.  
+          Useful for analyzing user activity by device.
+
+      - name: email_address
+        description: >
+          Email address associated with the user.  
+          May be NULL if not available in the source data.
+
   - name: fact_sales_order
-    description: "Fact table for sale order"
+    description: |
+      The **fact_sales_order** table contains transactional-level sales data at the
+      order line grain. Each row represents a purchased product within an order.  
+      
+      This fact table integrates user, product, location, store, and date information
+      along with normalized prices converted into USD. It provides the foundation for
+      sales reporting, revenue analysis, and order-level aggregations.
+      
+      - One row = one product in a successful checkout (order line level).
+      - Prices are converted to USD using `dim_exchange_rate`.
     columns:
       - name: product_id
+        description: Foreign key referencing the purchased product (`dim_product`).
         tests:
           - relationships:
               to: ref('dim_product')
               field: product_id
       - name: location_key
+        description: Foreign key referencing the location of the order (`dim_location`).
         tests:
           - relationships:
               to: ref('dim_location')
               field: location_key
       - name: user_id
+        description: Foreign key referencing the user who placed the order (`dim_user`).
         tests:
           - relationships:
               to: ref('dim_user')
               field: user_id
       - name: device_id
+        description: Foreign key referencing the device used to place the order (`dim_device`).
         tests:
           - relationships:
               to: ref('dim_device')
               field: device_id
       - name: date_id
+        description: Foreign key referencing the order date (`dim_date`).
         tests:
           - relationships:
               to: ref('dim_date')
               field: date_id
       - name: store_id
+        description: Foreign key referencing the store website (`dim_store`).
         tests:
           - relationships:
               to: ref('dim_store')
               field: store_id
+      - name: order_id
+        description: Business identifier for the order, shared across order lines.
+      - name: currency
+        description: Currency code of the normalized sales amount (always `USD`).
+      - name: order_quantity
+        description: Number of units purchased for the product in this order line.
+      - name: unit_price
+        description: The normalized unit price in **USD** after applying exchange rates.
+      - name: sale_amount
+        description: Total sales amount in **USD** (order_quantity × unit_price).
 
   - name: stg_ip_location
+    description: |
+      The **stg_ip_location** staging model standardizes raw IP location data from
+      `glamira_data.raw_ip_locations`.  
+      
+      Each record represents a unique combination of IP address and geographic attributes.  
+      A `location_key` surrogate key is generated using a hash of IP address, country, region,
+      and city, to support consistent joins with the `dim_location` dimension.  
     columns:
+      - name: location_key
+        description: Surrogate key generated using FARM_FINGERPRINT on IP + geo attributes.
       - name: ip_address
-        data_tests:
-          - unique
-          - not_null
+        description: The raw IP address of the user or request source.
+      - name: country_code
+        description: ISO country code associated with the IP address.
+      - name: country_name
+        description: Full country name associated with the IP address.
+      - name: region_name
+        description: Region or state name associated with the IP address.
+      - name: city_name
+        description: City name associated with the IP address.
 
   - name: stg_product
+    description: |
+      The **stg_product** staging model standardizes raw product data from
+      `glamira_data.raw_products`.  
+      
+      Each record represents a product with its attributes such as category, collection,
+      type, gender, material design, and pricing information.  
+      
+      Numeric fields like `price`, `min_price`, and `max_price` are cast into `NUMERIC`
+      for consistency and downstream analytical use.  
     columns:
       - name: product_id
-        data_tests:
-          - unique
-          - not_null
+        description: Unique identifier for the product from the source system.
+      - name: product_name
+        description: Human-readable product name.
+      - name: category_name
+        description: Category assigned to the product (e.g., rings, necklaces).
+      - name: product_collection
+        description: Collection name the product belongs to.
+      - name: type_id
+        description: Product type identifier, typically used for classification.
+      - name: gender
+        description: Target gender for the product (e.g., Male, Female, Unisex).
+      - name: material_design
+        description: Material and design details of the product.
+      - name: product_price
+        description: Base price of the product, cast to NUMERIC.
+      - name: min_price
+        description: Minimum available price for the product, cast to NUMERIC.
+      - name: max_price
+        description: Maximum available price for the product, cast to NUMERIC.
+      - name: product_url
+        description: Product detail page URL.
+
+  - name: stg_user_behavior
+    description: |
+      The **stg_user_behavior** staging model standardizes raw behavioral data 
+      from `glamira_data.raw_user_behaviors`.  
+      
+      Each record represents a user action (e.g., browsing, adding to cart, checkout, 
+      recommendation clicks) along with contextual information such as device, 
+      location (via IP), and order details.  
+      
+      This model provides the foundation for building fact tables like 
+      `fact_sales_order` and related dimensions.
+
+    columns:
+      - name: _id
+        description: Unique identifier of the raw behavior event.
+      - name: time_stamp
+        description: Event timestamp in Unix epoch seconds.
+      - name: date_id
+        description: Surrogate key in `YYYYMMDD` format derived from the event timestamp.
+      - name: local_time
+        description: Local time when the event occurred.
+      - name: collection
+        description: Type of user action (e.g., product_view, checkout_success).
+      - name: product_id
+        description: Identifier of the product involved in the event (if applicable).
+      - name: ip_address
+        description: IP address of the user, used for location mapping.
+      - name: user_id
+        description: Unique identifier of the user (from database).
+      - name: order_id
+        description: Identifier of the sales order linked to this event (if applicable).
+      - name: price
+        description: Product price associated with the event, cast to NUMERIC.
+      - name: sale_currency
+        description: Currency in which the price is denominated (e.g., USD, EUR).
+      - name: is_paypal
+        description: Boolean flag indicating whether PayPal was used for payment.
+      - name: current_url
+        description: URL where the event occurred.
+      - name: referrer_url
+        description: URL that referred the user to the current page.
+      - name: key_search
+        description: Search keyword entered by the user.
+      - name: recommendation_clicked_position
+        description: Position of the clicked recommendation in the list.
+      - name: recommendation_product_id
+        description: Product ID of the recommended item that was clicked.
+      - name: recommendation_product_position
+        description: Position of the recommended product displayed to the user.
+      - name: cart_products
+        description: Array of product details in the user’s cart at the time of the event.
+      - name: option
+        description: Selected product options (e.g., size, color).
+      - name: show_recommendation
+        description: Boolean flag indicating whether recommendations were shown.
+      - name: recommendation
+        description: JSON or structured data about recommendation engine output.
+      - name: device_id
+        description: Unique identifier for the user’s device.
+      - name: email_address
+        description: User’s email address if available.
+      - name: user_agent
+        description: User agent string of the browser/device.
+      - name: device_resolution
+        description: Screen resolution of the device.
+      - name: store_id
+        description: Store identifier where the event took place.

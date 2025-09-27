@@ -1,7 +1,7 @@
 WITH user_behaviors AS (
 
     SELECT 
-        _id
+        _id AS event_id
         ,time_stamp
         ,FORMAT_DATE('%Y%m%d', DATE(TIMESTAMP_SECONDS(time_stamp))) AS date_id
         ,local_time
@@ -16,12 +16,7 @@ WITH user_behaviors AS (
         ,current_url
         ,referrer_url
         ,key_search
-        ,recommendation_clicked_position
-        ,recommendation_product_id
-        ,recommendation_product_position
         ,cart_products
-        ,option
-        ,show_recommendation
         ,recommendation
         ,device_id
         ,email_address
